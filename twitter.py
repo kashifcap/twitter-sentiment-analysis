@@ -45,4 +45,22 @@ class TwitterClient(object):
             return tweets
         except:
             pass
-        
+
+
+def main():
+    api = TwitterClient()
+    tweets = api.get_tweets('Donald Trump', count = 200)
+    positive_tweets = [tweet for tweet in tweets if tweet['sentiment'] == 'positive']
+    print(f'Positive tweets percentage = {100*len(positive_tweets)/len(tweets)}')
+    negative_tweets = [tweet for tweet in tweets if tweet['sentiment'] == 'negative']
+    print(f'negative tweets percentage = {100*len(negative_tweets)/len(tweets)}')
+    print(f'Neutral tweets percentage = {100*(len(tweets)-(len(negative_tweets)+len(positive_tweets)))/len(tweets)}')
+    print("\n\nPositive Tweets :\n\n")
+    for tweet in positive_tweets[:10]:
+        print(tweet['text'])
+    print("\n\nNegative Tweets :\n\n")
+    for tweet in negative_tweets[:10]:
+        print(tweet['text'])
+
+if __name__ == '__main__':
+    main()
